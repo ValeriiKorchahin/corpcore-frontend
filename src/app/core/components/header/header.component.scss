@@ -1,0 +1,12 @@
+.header {
+  padding: 10px;
+  height: 50px;
+  background-color: var(--primary-color);
+  flex-wrap: wrap;
+
+  &__left-section {
+    .menu-toggle-btn {
+      background-color: var(--accent-color-light);
+    }
+  }
+}

@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@use 'assets/styles/mixins' as mixins;
+@use 'assets/styles/mat-rewritten-classes' as mat-rewritten;
+// Themes
+@use "assets/styles/themes/blue-porcelain.theme" as blue-porcelain-theme;
+
+:root {
+  --primary-color: #344966;
+  --secondary-color: #B4CDED;
+  --accent-color-light: #F4F7F3;
+  --accent-color-dark: #0D1821;
+
+  --error-color: #cb0000;
+  --warng-color: #f9bb31;
+  --info-color: #006cc5;
+};
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+};
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+};
+
+// mixins
+
+.flex-row {
+  @include mixins.flex-row;
+}
+
+.flex-col {
+  @include mixins.flex-col;
+}
+
+.space-between {
+  @include mixins.space-between;
+}
+
+.space-evenly {
+  @include mixins.space-evenly;
+}
+
+.space-around {
+  @include mixins.space-around;
+}
+
+.justify-center {
+  @include mixins.center;
+}
