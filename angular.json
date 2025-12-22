@@ -4,6 +4,7 @@
   "cli": {
     "packageManager": "npm",
     "schematicCollections": [
+      "@schematics/angular",
       "angular-eslint"
     ]
   },
@@ -11,7 +12,11 @@
   "projects": {
     "corp-frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
