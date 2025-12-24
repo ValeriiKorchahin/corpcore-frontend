@@ -1,25 +1,27 @@
 <header class="header flex-row space-between">
-  <div class="header__left-section flex-row">
-    <button
-      class="menu-toggle-btn"
-      mat-icon-button
-      matTooltip="Toggle menu">
-      <mat-icon>
-        menu
-      </mat-icon>
-    </button>
-  </div>
-  <div class="header__right-section">
-    <div class="form-field flex-col">
-      <mat-form-field class="company-select-field">
-        <mat-select placeholder="Select company">
-          @for (company of companies(); track company.id) {
-            <mat-option [value]="company.id">
-              {{company.name}}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+  @if (currentUser()) {
+    <div class="header__left-section flex-row">
+      <button
+        class="menu-toggle-btn"
+        mat-icon-button
+        matTooltip="Toggle menu">
+        <mat-icon>
+          menu
+        </mat-icon>
+      </button>
     </div>
-  </div>
+    <div class="header__right-section">
+      <div class="form-field flex-col">
+        <mat-form-field class="company-select-field">
+          <mat-select placeholder="Select company">
+            @for (company of companies(); track company.id) {
+              <mat-option [value]="company.id">
+                {{ company.name }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  }
 </header>

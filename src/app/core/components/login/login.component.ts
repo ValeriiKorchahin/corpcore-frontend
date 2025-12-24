@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -12,6 +12,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { UserService } from '../../services/user.service';
+import { ILogin } from '../../models/ILogin.interface';
 
 @Component({
   selector: 'app-login',
@@ -43,12 +45,15 @@ export class LoginComponent implements OnInit {
   }>;
   public isPasswordVisible = false;
 
+  private readonly userService = inject(UserService);
+
   ngOnInit() {
     this.createFormGroup();
   }
 
   login() {
-    console.log(this.form.value);
+    const credentials = this.form.value as ILogin;
+    this.userService.login(credentials).subscribe();
   }
 
   private createFormGroup() {
