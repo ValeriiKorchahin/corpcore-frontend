@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -22,7 +29,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatIconButton,
     MatSuffix,
     MatIcon,
-    MatTooltip
+    MatTooltip,
+    MatCardTitle
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
