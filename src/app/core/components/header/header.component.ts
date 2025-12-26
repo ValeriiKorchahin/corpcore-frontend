@@ -4,9 +4,9 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatFormField } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { UserService } from '../../services/user.service';
 import { IOrganization } from '../../models/IOrganization.interface';
 import { IUser } from '../../models/IUser.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -23,10 +23,11 @@ import { IUser } from '../../models/IUser.interface';
 })
 export class HeaderComponent implements OnInit {
   public companies = signal<IOrganization[]>([]);
-  public user = signal<IUser | null>(null);
+  public currentUser = signal<IUser | null>(null);
 
-  ngOnInit() {
+  private readonly userService = inject(UserService);
 
-
+  ngOnInit(): void {
+    this.currentUser.set(this.userService.user());
   }
 }

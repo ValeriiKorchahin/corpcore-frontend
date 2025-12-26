@@ -7,13 +7,14 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatError, MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { UserService } from '../../services/user.service';
 import { ILogin } from '../../models/ILogin.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,9 @@ import { ILogin } from '../../models/ILogin.interface';
     MatSuffix,
     MatIcon,
     MatTooltip,
-    MatCardTitle
+    MatCardTitle,
+    MatError,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
