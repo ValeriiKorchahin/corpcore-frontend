@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { IAuthResponse, ILogin, IRegister } from '../models/ILogin.interface';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IUser } from '../models/IUser.interface';
 import { JwtService } from './jwt.service';
 import { Router } from '@angular/router';
@@ -29,9 +29,6 @@ export class UserService {
     return this.apiService.get<IUser>('users/current').pipe(
       tap((user) => {
         this._user.set(user);
-      }),
-      catchError(() => {
-        return of(null);
       })
     );
   }

@@ -7,9 +7,16 @@ import { jwtInterceptor } from './core/components/interceptors/jwt-interceptor';
 import { UserService } from './core/services/user.service';
 import { firstValueFrom } from 'rxjs';
 
-export function authInitializer() {
+export async function authInitializer() {
   const userService = inject(UserService);
-  return firstValueFrom(userService.getCurrentUser());
+  try {
+   return await firstValueFrom(userService.getCurrentUser())
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err: unknown) {
+    // Expected: user not logged in or token expired
+    // App should continue to load and show login page
+    return null
+  }
 }
 
 export const appConfig: ApplicationConfig = {

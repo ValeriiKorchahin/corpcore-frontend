@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { throwError } from 'rxjs';
 
 export const passwordMatchValidator = (
   passwordKey = 'password',
