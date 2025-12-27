@@ -1,0 +1,102 @@
+<div class="card-wrapper flex-row justify-center">
+  <mat-card class="card">
+    <mat-card-header class="card__header">
+      <mat-card-title class="card__title">
+        Sign Up
+      </mat-card-title>
+      <mat-card-subtitle class="card__subtitle">
+        Create new account & organization
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <div class="card__form">
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="email">
+              @if (form.controls.email.hasError('required')) {
+                <mat-error>Email is required</mat-error>
+              }
+              @if (form.controls.email.hasError('email')) {
+                <mat-error>Invalid email</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" formControlName="name">
+              @if (form.controls.name.hasError('required')) {
+                <mat-error>Name is required</mat-error>
+              }
+              @if (form.controls.name.hasError('minlength')) {
+                <mat-error>Must be at least 2 characters long</mat-error>
+              }
+              @if (form.controls.name.hasError('maxlength')) {
+                <mat-error>Must be less than 50 characters long</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Organization name</mat-label>
+              <input matInput type="text" formControlName="organizationName">
+              @if (form.controls.organizationName.hasError('required')) {
+                <mat-error>Organization name is required</mat-error>
+              }
+              @if (form.controls.organizationName.hasError('minlength')) {
+                <mat-error>Must be at least 2 characters long</mat-error>
+              }
+              @if (form.controls.organizationName.hasError('maxlength')) {
+                <mat-error>Must be less than 100 characters long</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password">
+              <button mat-icon-button matSuffix (click)="isPasswordVisible = !isPasswordVisible"
+                      [matTooltip]="isPasswordVisible ? 'Hide' : 'Show'">
+                <mat-icon>{{ isPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (form.controls.password.hasError('required')) {
+                <mat-error>Password is required</mat-error>
+              }
+              @if (form.controls.password.hasError('minlength')) {
+                <mat-error>Password must be at leat 6 characters long</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Confirm password</mat-label>
+              <input matInput [type]="isPasswordMatchVisible ? 'text' : 'password'" formControlName="confirmPassword">
+              <button mat-icon-button matSuffix (click)="isPasswordMatchVisible = !isPasswordMatchVisible"
+                      [matTooltip]="isPasswordMatchVisible ? 'Hide' : 'Show'">
+                <mat-icon>{{ isPasswordMatchVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (form.controls.confirmPassword.hasError('required')) {
+                <mat-error>Please, confirm your password</mat-error>
+              }
+              @if (form.controls.confirmPassword.hasError('passwordMismatch')) {
+                <mat-error>Passwords are not identical</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card__actions flex-row space-between">
+      <span>Already have an account?
+        <br>
+        <a mat-button routerLink="/login">Login</a>
+      </span>
+      <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="signUp()">
+        Sign Up
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

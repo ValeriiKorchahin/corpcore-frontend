@@ -1,0 +1,49 @@
+<div class="card-wrapper flex-row justify-center">
+  <mat-card class="card">
+    <mat-card-header class="card__header">
+      <mat-card-title class="card__title">
+        Login
+      </mat-card-title>
+      <mat-card-subtitle class="card__subtitle">
+        Enter your credentials below
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <div class="card__form">
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="email">
+              @if (form.controls.email.hasError('required')) {
+                <mat-error>Email is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password">
+              <button mat-icon-button matSuffix (click)="isPasswordVisible = !isPasswordVisible"
+                      [matTooltip]="isPasswordVisible ? 'Hide' : 'Show'">
+                <mat-icon>{{ isPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (form.controls.password.hasError('required')) {
+                <mat-error>Password is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card__actions flex-row space-between">
+      <span>Do not have an account?
+        <br>
+        <a mat-button routerLink="/register">Sign Up</a>
+      </span>
+      <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="login()">
+        Login
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
