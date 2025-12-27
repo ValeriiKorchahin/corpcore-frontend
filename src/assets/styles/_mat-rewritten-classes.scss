@@ -1,3 +1,26 @@
+@use "@angular/material" as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+};
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+};
+
 // Background color change
 .mat-mdc-text-field-wrapper {
   background-color: var(--form-field-background-color) !important;
@@ -9,11 +32,43 @@
     height: 40px !important;
     border-radius: 25px !important;
   }
+
   .mdc-line-ripple, .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }
+
   .mdc-text-field--outlined .mat-mdc-form-field-infix,
   .mdc-text-field--no-label .mat-mdc-form-field-infix {
     padding: 10px !important;
+  }
+}
+
+.error-snackbar-container {
+  @include mat.snack-bar-overrides((
+    container-color: var(--error-color),
+    supporting-text-color: var(--accent-color-light),
+  ));
+  button {
+    color: var(--accent-color-light);
+  }
+}
+
+.success-snackbar-container {
+  @include mat.snack-bar-overrides((
+    container-color: var(--success-color),
+    supporting-text-color: var(--accent-color-light),
+  ));
+  button {
+    color: var(--accent-color-light);
+  }
+}
+
+.info-snackbar-container {
+  @include mat.snack-bar-overrides((
+    container-color: var(--info-color),
+    supporting-text-color: var(--accent-color-light),
+  ));
+  button {
+    color: var(--accent-color-light);
   }
 }
