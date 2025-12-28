@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 import { Component, Inject, inject } from '@angular/core';
 import {
   MAT_SNACK_BAR_DATA,

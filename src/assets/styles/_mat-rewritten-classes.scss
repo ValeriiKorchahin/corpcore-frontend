@@ -26,7 +26,7 @@ body {
   background-color: var(--form-field-background-color) !important;
 }
 
-// Company select located in header section
+// CompanyService select located in header section
 .company-select-field {
   .mat-mdc-text-field-wrapper {
     height: 40px !important;
@@ -71,4 +71,22 @@ body {
   button {
     color: var(--accent-color-light);
   }
+}
+
+.list-item-step {
+  @include mat.list-overrides((
+    list-item-container-color: var(--secondary-color),
+  ));
+}
+
+.list-item-step-selected {
+  @include mat.list-overrides((
+    list-item-label-text-color: var(--accent-color-light),
+    list-item-hover-label-text-color: var(--accent-color-light),
+    list-item-disabled-label-text-color: var(--accent-color-light),
+    list-item-disabled-leading-icon-color: var(--accent-color-light),
+    active-indicator-color: var(--primary-color),
+    list-item-leading-icon-color: var(--accent-color-light),
+    list-item-trailing-icon-color: var(--accent-color-light),
+  ));
 }

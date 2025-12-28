@@ -1,0 +1,32 @@
+<div class="wrapper">
+<mat-nav-list [disabled]="">
+  @for (step of steps(); track step; let i = $index) {
+    <mat-list-item
+      [ngClass]="selectedIndex() === i ? 'list-item-step-selected' : 'list-item-step'"
+      [activated]="i === selectedIndex()"
+      (click)="selectTab(i)">
+      <mat-icon matListItemIcon>
+        {{step.icon}}
+      </mat-icon>
+      <span matListItemTitle>{{step.name}}</span>
+      <div matListItemMeta>
+        <mat-icon [class.selected-item-icon]="i === selectedIndex()">
+          {{step.submitted ? 'check' : 'pending'}}
+        </mat-icon>
+      </div>
+    </mat-list-item>
+  }
+</mat-nav-list>
+<section>
+  <app-register
+    #registerComponent
+    (nextStep)="nextStep($event)"
+    [ngClass]="selectedIndex() === 0 ? 'show' : 'hide'"
+  ></app-register>
+  <app-company
+    #companyComponent
+    (finishSignUp)="finishRegister($event)"
+    [ngClass]="selectedIndex() === 1 ? 'show' : 'hide'"
+  ></app-company>
+</section>
+</div>

@@ -1,0 +1,22 @@
+.card-wrapper {
+  height: 100%;
+}
+
+.card {
+  width: 700px;
+  &__title {
+    font-weight: 500;
+    font-size: 25px;
+    color: var(--primary-color);
+  }
+  &__header, &__actions {
+    padding: 16px 16px 16px;
+  }
+  &__title, &__subtitle {
+    margin: 10px;
+  }
+  .form-field {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+}

@@ -26,6 +26,10 @@
   @include mixins.flex-row;
 }
 
+.flex-row-10 {
+  @include mixins.flex-row(10px);
+}
+
 .flex-col {
   @include mixins.flex-col;
 }
@@ -44,4 +48,17 @@
 
 .justify-center {
   @include mixins.center;
+}
+
+.flex-wrap {
+  @include mixins.flex-wrap;
+}
+
+// Universal classes
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
 }

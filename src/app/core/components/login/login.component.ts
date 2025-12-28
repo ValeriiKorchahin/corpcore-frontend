@@ -15,6 +15,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { UserService } from '../../services/user.service';
 import { ILogin } from '../../models/ILogin.interface';
 import { RouterLink } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     const credentials = this.form.value as ILogin;
-    this.userService.login(credentials).subscribe();
+    this.userService.login(credentials).pipe(
+      switchMap(() => this.userService.getUserCompanies())
+    ).subscribe();
   }
 
   private createFormGroup() {

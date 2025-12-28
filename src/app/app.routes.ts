@@ -12,8 +12,8 @@ export const routes: Routes = [
   {
     path: 'register',
     canActivate: [noAuthGuard],
-    loadComponent: () => import('./core/components/register/register.component')
-      .then((x) => x.RegisterComponent)
+    loadComponent: () => import('./core/components/register-stepper/register-stepper.component')
+      .then((x) => x.RegisterStepperComponent)
   },
   {
     path: '',
