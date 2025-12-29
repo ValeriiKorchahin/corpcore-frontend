@@ -10,7 +10,7 @@ import {
 } from '@angular/material/card';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { PhoneInput } from '../../../utils/controls/phone-input/phone-input';
 export type CompanyFormType = FormGroup<{
   name: FormControl<string>;
   logoUrl: FormControl<string | null>;
@@ -35,6 +35,7 @@ export type CompanyFormType = FormGroup<{
     MatInput,
     MatLabel,
     ReactiveFormsModule,
+    PhoneInput,
   ],
   templateUrl: './company.component.html',
   styleUrl: './company.component.scss',
