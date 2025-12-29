@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatListItem,
-  MatListItemIcon, MatListItemMeta, MatListItemTitle,
+  MatListItemIcon,
+  MatListItemMeta,
+  MatListItemTitle,
   MatNavList,
 } from '@angular/material/list';
 import { NgClass } from '@angular/common';
-import { ICompany } from '../../models/ICompany.interface';
 import { IRegister } from '../../models/ILogin.interface';
 import { NotificationsService } from '../../services/notifications.service';
 import { of, switchMap } from 'rxjs';
@@ -27,25 +28,27 @@ import { of, switchMap } from 'rxjs';
     MatListItemMeta,
     NgClass,
     RegisterComponent,
-    CompanyComponent
+    CompanyComponent,
   ],
   templateUrl: './register-stepper.component.html',
   styleUrl: './register-stepper.component.scss',
 })
 export class RegisterStepperComponent {
-  public registerComponent: Signal<RegisterComponent | undefined> = viewChild('registerComponent');
-  public companyComponent: Signal<CompanyComponent | undefined> = viewChild('companyComponent');
+  public registerComponent: Signal<RegisterComponent | undefined> =
+    viewChild.required('registerComponent');
+  public companyComponent: Signal<CompanyComponent | undefined> =
+    viewChild.required('companyComponent');
   public steps = signal([
     {
       submitted: false,
       icon: 'person',
-      name: 'Register'
+      name: 'Register',
     },
     {
       submitted: false,
       icon: 'add_business',
-      name: 'Create company'
-    }
+      name: 'Create company',
+    },
   ]);
 
   public selectedIndex = signal(0);
@@ -56,19 +59,33 @@ export class RegisterStepperComponent {
   private readonly router = inject(Router);
 
   finishRegister(skipCompany: boolean) {
-    debugger;
-    const company = skipCompany ?
-      null : this.companyComponent()?.form.value as ICompany;
-    const registerValue = this.registerComponent()?.form.value;
-    delete registerValue?.confirmPassword;
     this.checkFormValidity();
+    const registerFormValue = this.registerComponent()?.form.getRawValue();
+    const companyFormValue = this.companyComponent()?.form.getRawValue();
+    const company = skipCompany
+      ? null
+      : {
+          email: companyFormValue!.email,
+          name: companyFormValue!.name,
+          logoUrl: companyFormValue!.logoUrl,
+          address: companyFormValue!.address,
+          phone: companyFormValue!.phone,
+          country: companyFormValue!.country,
+        };
+    const register: IRegister = {
+      name: registerFormValue!.name,
+      password: registerFormValue!.password,
+      email: registerFormValue!.email,
+      organizationName: registerFormValue!.organizationName,
+    };
 
-    return this.userService.register(registerValue as IRegister).pipe(
-      switchMap(() =>
-        company ? this.companyService.create(company) : of(null)
-      ),
-      switchMap(() => this.userService.getUserCompanies())
-    ).subscribe(() => this.router.navigate(['/']));
+    return this.userService
+      .register(register)
+      .pipe(
+        switchMap(() => (company ? this.companyService.create(company) : of(null))),
+        switchMap(() => this.userService.getUserCompanies()),
+      )
+      .subscribe(() => this.router.navigate(['/']));
   }
 
   selectTab(i: number) {

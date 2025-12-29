@@ -9,10 +9,12 @@
     font-size: 25px;
     color: var(--primary-color);
   }
-  &__header, &__actions {
+  &__header,
+  &__actions {
     padding: 16px 16px 16px;
   }
-  &__title, &__subtitle {
+  &__title,
+  &__subtitle {
     margin: 10px;
   }
   .form-field {

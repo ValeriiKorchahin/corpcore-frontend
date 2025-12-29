@@ -13,7 +13,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root',
 })
 export class UserService {
-
   private _user = signal<IUser | null>(null);
   private _userCompanies = signal<IOrganization[]>([]);
   private readonly apiService = inject(ApiService);
@@ -42,7 +41,7 @@ export class UserService {
       tap((user) => {
         this._user.set(user);
       }),
-      switchMap(() => this.getUserCompanies())
+      switchMap(() => this.getUserCompanies()),
     );
   }
 
@@ -57,7 +56,7 @@ export class UserService {
       catchError((err: HttpErrorResponse) => {
         this.notificationsService.showMessage(err.error?.error, 'error');
         throw new Error(err.message);
-      })
+      }),
     );
   }
 
@@ -71,7 +70,7 @@ export class UserService {
       catchError((err: HttpErrorResponse) => {
         this.notificationsService.showMessage(err.error?.error, 'error');
         throw new Error(err.message);
-      })
+      }),
     );
   }
 
@@ -86,7 +85,7 @@ export class UserService {
       id: res.id,
       name: res.name,
       email: res.email,
-      role: res.organizations[0].role
+      role: res.organizations[0].role,
     };
     this._user.set(user);
   }

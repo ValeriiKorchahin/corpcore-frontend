@@ -6,18 +6,18 @@ import {
   MatCardContent,
   MatCardHeader,
   MatCardSubtitle,
-  MatCardTitle
+  MatCardTitle,
 } from '@angular/material/card';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 export type CompanyFormType = FormGroup<{
-  name: FormControl<string | null>;
+  name: FormControl<string>;
   logoUrl: FormControl<string | null>;
-  country: FormControl<string | null>;
-  email: FormControl<string | null>;
-  phone: FormControl<string | null>;
-  address: FormControl<string | null>;
+  country: FormControl<string>;
+  email: FormControl<string>;
+  phone: FormControl<string>;
+  address: FormControl<string>;
 }>;
 
 @Component({
@@ -53,12 +53,21 @@ export class CompanyComponent implements OnInit {
 
   private createFormGroup() {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      name: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(2)],
+      }),
       logoUrl: new FormControl(''),
-      country: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      phone: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.email],
+      }),
+      address: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(5)],
+      }),
     });
   }
 }

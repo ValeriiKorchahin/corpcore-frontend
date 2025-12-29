@@ -8,14 +8,7 @@ import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
-  imports: [
-    MatIconButton,
-    MatIcon,
-    MatTooltip,
-    MatFormField,
-    MatSelect,
-    MatOption,
-  ],
+  imports: [MatIconButton, MatIcon, MatTooltip, MatFormField, MatSelect, MatOption],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

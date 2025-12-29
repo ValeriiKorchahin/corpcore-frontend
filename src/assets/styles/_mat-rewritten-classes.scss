@@ -1,16 +1,18 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 html {
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-};
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
 
 body {
   color-scheme: light;
@@ -19,7 +21,7 @@ body {
   font: var(--mat-sys-body-medium);
   margin: 0;
   height: 100%;
-};
+}
 
 // Background color change
 .mat-mdc-text-field-wrapper {
@@ -33,7 +35,8 @@ body {
     border-radius: 25px !important;
   }
 
-  .mdc-line-ripple, .mat-mdc-form-field-subscript-wrapper {
+  .mdc-line-ripple,
+  .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }
 
@@ -44,49 +47,59 @@ body {
 }
 
 .error-snackbar-container {
-  @include mat.snack-bar-overrides((
-    container-color: var(--error-color),
-    supporting-text-color: var(--accent-color-light),
-  ));
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--error-color),
+      supporting-text-color: var(--accent-color-light),
+    )
+  );
   button {
     color: var(--accent-color-light);
   }
 }
 
 .success-snackbar-container {
-  @include mat.snack-bar-overrides((
-    container-color: var(--success-color),
-    supporting-text-color: var(--accent-color-light),
-  ));
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--success-color),
+      supporting-text-color: var(--accent-color-light),
+    )
+  );
   button {
     color: var(--accent-color-light);
   }
 }
 
 .info-snackbar-container {
-  @include mat.snack-bar-overrides((
-    container-color: var(--info-color),
-    supporting-text-color: var(--accent-color-light),
-  ));
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--info-color),
+      supporting-text-color: var(--accent-color-light),
+    )
+  );
   button {
     color: var(--accent-color-light);
   }
 }
 
 .list-item-step {
-  @include mat.list-overrides((
-    list-item-container-color: var(--secondary-color),
-  ));
+  @include mat.list-overrides(
+    (
+      list-item-container-color: var(--secondary-color),
+    )
+  );
 }
 
 .list-item-step-selected {
-  @include mat.list-overrides((
-    list-item-label-text-color: var(--accent-color-light),
-    list-item-hover-label-text-color: var(--accent-color-light),
-    list-item-disabled-label-text-color: var(--accent-color-light),
-    list-item-disabled-leading-icon-color: var(--accent-color-light),
-    active-indicator-color: var(--primary-color),
-    list-item-leading-icon-color: var(--accent-color-light),
-    list-item-trailing-icon-color: var(--accent-color-light),
-  ));
+  @include mat.list-overrides(
+    (
+      list-item-label-text-color: var(--accent-color-light),
+      list-item-hover-label-text-color: var(--accent-color-light),
+      list-item-disabled-label-text-color: var(--accent-color-light),
+      list-item-disabled-leading-icon-color: var(--accent-color-light),
+      active-indicator-color: var(--primary-color),
+      list-item-leading-icon-color: var(--accent-color-light),
+      list-item-trailing-icon-color: var(--accent-color-light),
+    )
+  );
 }

@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run format && npm run lint",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
