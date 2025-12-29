@@ -29,3 +29,7 @@
   align-items: center;
   justify-content: space-around;
 }
+
+@mixin flex-wrap {
+  flex-wrap: wrap;
+}

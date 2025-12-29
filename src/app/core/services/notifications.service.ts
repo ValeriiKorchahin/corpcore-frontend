@@ -7,9 +7,7 @@ type NotificationType = 'success' | 'error' | 'info';
 @Injectable({
   providedIn: 'root',
 })
-
 export class NotificationsService {
-
   private readonly _matSnackBar = inject(MatSnackBar);
 
   showMessage(message: string, type: NotificationType) {

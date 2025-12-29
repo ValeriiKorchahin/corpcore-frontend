@@ -2,28 +2,32 @@
 @use 'assets/styles/mixins' as mixins;
 @use 'assets/styles/mat-rewritten-classes' as mat-rewritten;
 // Themes
-@use "assets/styles/themes/blue-porcelain.theme" as blue-porcelain-theme;
+@use 'assets/styles/themes/blue-porcelain.theme' as blue-porcelain-theme;
 
 :root {
   // General UI
   --primary-color: #344966;
-  --secondary-color: #B4CDED;
-  --accent-color-light: #FFFBFC;
-  --accent-color-dark: #0D1821;
+  --secondary-color: #b4cded;
+  --accent-color-light: #fffbfc;
+  --accent-color-dark: #0d1821;
 
   // Form Field
-  --form-field-background-color: #FFFBFC;
+  --form-field-background-color: #fffbfc;
 
   --error-color: #cb0000;
-  --success-color: #67C23A;
+  --success-color: #67c23a;
   --warng-color: #f9bb31;
   --info-color: #006cc5;
-};
+}
 
 // mixins
 
 .flex-row {
   @include mixins.flex-row;
+}
+
+.flex-row-10 {
+  @include mixins.flex-row(10px);
 }
 
 .flex-col {
@@ -44,4 +48,17 @@
 
 .justify-center {
   @include mixins.center;
+}
+
+.flex-wrap {
+  @include mixins.flex-wrap;
+}
+
+// Universal classes
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
 }

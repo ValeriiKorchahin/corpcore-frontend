@@ -1,0 +1,82 @@
+<div class="card-wrapper flex-row justify-center">
+  <mat-card class="card">
+    <mat-card-header class="card__header">
+      <mat-card-title class="card__title"> New Company </mat-card-title>
+      <mat-card-subtitle class="card__subtitle">
+        Create your first company or skip this step to create it later
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <div class="card__form">
+          <div class="form-field-group flex-row-10 space-between">
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Company name</mat-label>
+                <input matInput type="text" formControlName="name" />
+                @if (form.controls.name.hasError('required')) {
+                  <mat-error>Name is required</mat-error>
+                }
+                @if (form.controls.name.hasError('minlength')) {
+                  <mat-error>Must be at least 2 characters long</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Logo url (optional)</mat-label>
+                <input matInput type="text" formControlName="logoUrl" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field-group flex-row-10 space-between">
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" formControlName="email" />
+                @if (form.controls.email.hasError('required')) {
+                  <mat-error>Email is required</mat-error>
+                }
+                @if (form.controls.email.hasError('email')) {
+                  <mat-error>Invalid email</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" formControlName="phone" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-field-group flex-row-10 space-between">
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Country</mat-label>
+                <input matInput type="text" formControlName="country" />
+              </mat-form-field>
+            </div>
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Address</mat-label>
+                <input matInput type="text" formControlName="address" />
+                @if (form.controls.address.hasError('required')) {
+                  <mat-error>Address is required</mat-error>
+                }
+                @if (form.controls.address.hasError('minlength')) {
+                  <mat-error>Must be at least 5 characters long</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="card__actions flex-row space-between">
+      <button mat-button (click)="submit(true)">Skip for now</button>
+      <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="submit(false)">
+        Finish Sign Up
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
