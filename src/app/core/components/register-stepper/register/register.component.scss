@@ -1,7 +1,3 @@
-.card-wrapper {
-  height: 100%;
-}
-
 .card {
   width: 500px;
   &__title {
@@ -17,8 +13,10 @@
   &__subtitle {
     margin: 10px;
   }
-  .form-field {
-    margin-bottom: 5px;
-    width: 100%;
+}
+
+@media (max-width: 550px) {
+  .card {
+    width: unset;
   }
 }

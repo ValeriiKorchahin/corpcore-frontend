@@ -1,4 +1,4 @@
-import { Component, OnInit, output } from '@angular/core';
+import { Component, OnInit, output, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -11,6 +11,9 @@ import {
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PhoneInput } from '../../../utils/controls/phone-input/phone-input';
+import { COUNTRIES } from '../../../utils/const/countries';
+import { MatSelect, MatOption } from '@angular/material/select';
+
 export type CompanyFormType = FormGroup<{
   name: FormControl<string>;
   logoUrl: FormControl<string | null>;
@@ -36,6 +39,11 @@ export type CompanyFormType = FormGroup<{
     MatLabel,
     ReactiveFormsModule,
     PhoneInput,
+    MatSelect,
+    MatOption,
+    MatSelect,
+    MatOption,
+    MatSelect,
   ],
   templateUrl: './company.component.html',
   styleUrl: './company.component.scss',
@@ -43,6 +51,7 @@ export type CompanyFormType = FormGroup<{
 export class CompanyComponent implements OnInit {
   public finishSignUp = output<boolean>();
   public form!: CompanyFormType;
+  readonly countries = signal(COUNTRIES);
 
   ngOnInit(): void {
     this.createFormGroup();
@@ -60,7 +69,10 @@ export class CompanyComponent implements OnInit {
       }),
       logoUrl: new FormControl(''),
       country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      phone: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      phone: new FormControl('', {
+        nonNullable: true,
+        validators: [],
+      }),
       email: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required, Validators.email],

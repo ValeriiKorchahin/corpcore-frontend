@@ -1,20 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostBinding,
+  inject,
   Input,
   OnDestroy,
-  Optional,
-  Self
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NgControl,
-} from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Country } from './models/Country.interface';
 import parsePhoneNumberFromString, { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
 import { MatInput } from '@angular/material/input';
@@ -22,27 +17,25 @@ import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select
 import { COUNTRIES } from '../../const/countries';
 import { Subject } from 'rxjs';
 import { MatFormFieldControl } from '@angular/material/form-field';
+
 @Component({
   selector: 'app-phone-input',
   providers: [
     {
       provide: MatFormFieldControl,
-      useExisting: PhoneInput
+      useExisting: PhoneInput,
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatSelect, MatSelectTrigger, MatInput, MatOption],
   template: `
-    <div class="phone-root"
-         (focusin)="onFocusIn()"
-         (focusout)="onFocusOut()">
-
+    <div class="phone-root" (focusin)="onFocusIn()" (focusout)="onFocusOut()">
       <mat-select
         class="country-select"
         [disabled]="disabled"
         [value]="selectedCountry"
-        (selectionChange)="selectCountry($event.value)">
-
+        (selectionChange)="selectCountry($event.value)"
+      >
         <mat-select-trigger>
           {{ selectedCountry.iso2 }}
           {{ selectedCountry.dialCode }}
@@ -62,7 +55,8 @@ import { MatFormFieldControl } from '@angular/material/form-field';
         class="phone-input"
         [disabled]="disabled"
         [value]="formatted"
-        (input)="onInput($any($event.target).value)" />
+        (input)="onInput($any($event.target).value)"
+      />
     </div>
   `,
   styles: `
@@ -89,21 +83,15 @@ import { MatFormFieldControl } from '@angular/material/form-field';
     }
   `,
 })
-export class PhoneInput  implements
-  ControlValueAccessor,
-  MatFormFieldControl<string>,
-  OnDestroy {
-
+export class PhoneInput implements ControlValueAccessor, MatFormFieldControl<string>, OnDestroy {
   // ─────────────────────────────────────────────
   // Material Form Field plumbing
   // ─────────────────────────────────────────────
 
   static nextId = 0;
   @HostBinding() id = `app-phone-input-${PhoneInput.nextId++}`;
-
+  public controlType = 'app-phone-input';
   readonly stateChanges = new Subject<void>();
-  controlType = 'app-phone-input';
-
   focused = false;
   errorState = false;
 
@@ -128,10 +116,10 @@ export class PhoneInput  implements
   onChange = (_: string | null) => {};
   onTouched = () => {};
 
-  constructor(
-    private elRef: ElementRef<HTMLElement>,
-    @Optional() @Self() public ngControl: NgControl
-  ) {
+  public ngControl = inject(NgControl, { optional: true, self: true });
+  private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  constructor() {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -148,9 +136,7 @@ export class PhoneInput  implements
     const parsed = parsePhoneNumberFromString(value);
     if (!parsed) return;
 
-    const country = this.countries.find(
-      c => c.iso2 === parsed.country
-    );
+    const country = this.countries.find((c) => c.iso2 === parsed.country);
 
     if (country) this.selectedCountry = country;
 
@@ -159,7 +145,7 @@ export class PhoneInput  implements
     this.stateChanges.next();
   }
 
-  registerOnChange(fn: any) {
+  registerOnChange(fn: never) {
     this.onChange = fn;
   }
 
@@ -177,9 +163,7 @@ export class PhoneInput  implements
   // ─────────────────────────────────────────────
 
   get value(): string | null {
-    return this.phone
-      ? `${this.selectedCountry.dialCode}${this.phone}`
-      : null;
+    return this.phone ? `${this.selectedCountry.dialCode}${this.phone}` : null;
   }
 
   get empty() {
@@ -219,10 +203,7 @@ export class PhoneInput  implements
   private reformat() {
     if (!this.phone) return;
 
-    const parsed = parsePhoneNumberFromString(
-      this.phone,
-      this.selectedCountry.iso2
-    );
+    const parsed = parsePhoneNumberFromString(this.phone, this.selectedCountry.iso2);
 
     this.formatted = parsed?.formatNational() ?? this.phone;
     this.emit();
@@ -249,15 +230,13 @@ export class PhoneInput  implements
 
     if (!control) return;
 
-    const invalidPhone = this.required && !this.value || !this.isValid();
+    const invalidPhone = (this.required && !this.value) || !this.isValid();
 
     this.errorState = !!(control && (control.touched || control.dirty) && invalidPhone);
 
-    // 🔹 Sync errors to the FormControl
     if (invalidPhone) {
       control.setErrors({ invalidPhone: true });
     } else {
-      // preserve other errors like 'required'
       if (control.hasError('invalidPhone')) {
         const errors = { ...control.errors };
         delete errors['invalidPhone'];
@@ -267,9 +246,7 @@ export class PhoneInput  implements
   }
 
   onContainerClick() {
-    this.elRef.nativeElement
-      .querySelector('input')
-      ?.focus();
+    this.elRef.nativeElement.querySelector('input')?.focus();
   }
 
   setDescribedByIds(_: string[]) {}
