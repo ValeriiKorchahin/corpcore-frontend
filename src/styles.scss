@@ -55,10 +55,25 @@
 }
 
 // Universal classes
+.form-field-group {
+  @include mixins.flex-row(10px);
+  @include mixins.space-between;
+}
+
+.form-field {
+  width: 100%;
+}
+
 .hide {
   display: none;
 }
 
 .show {
   display: block;
+}
+
+@media (max-width: 550px) {
+  .form-field-group {
+    @include mixins.flex-wrap;
+  }
 }

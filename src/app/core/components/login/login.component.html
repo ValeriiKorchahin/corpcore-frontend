@@ -8,16 +8,19 @@
       <form [formGroup]="form">
         <div class="card__form">
           <div class="form-field">
-            <mat-form-field appearance="outline" class="form-field">
+            <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
               <input matInput type="text" formControlName="email" />
               @if (form.controls.email.hasError('required')) {
                 <mat-error>Email is required</mat-error>
               }
+              @if (form.controls.email.hasError('email')) {
+                <mat-error>Invalid email</mat-error>
+              }
             </mat-form-field>
           </div>
           <div class="form-field">
-            <mat-form-field appearance="outline" class="form-field">
+            <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
               <input
                 matInput
@@ -46,7 +49,7 @@
         <br />
         <a mat-button routerLink="/register">Sign Up</a>
       </span>
-      <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="login()">
+      <button matButton="filled" type="submit" [disabled]="form.invalid" (click)="login()">
         Login
       </button>
     </mat-card-actions>

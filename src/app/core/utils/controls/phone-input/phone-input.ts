@@ -4,14 +4,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding, inject,
+  HostBinding,
+  inject,
   Input,
   OnDestroy,
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NgControl,
-} from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Country } from './models/Country.interface';
 import parsePhoneNumberFromString, { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
 import { MatInput } from '@angular/material/input';

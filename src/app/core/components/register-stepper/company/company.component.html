@@ -9,9 +9,9 @@
     <mat-card-content>
       <form [formGroup]="form">
         <div class="card__form">
-          <div class="form-field-group flex-row-10 space-between">
+          <div class="form-field-group">
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline">
                 <mat-label>Company name</mat-label>
                 <input matInput type="text" formControlName="name" />
                 @if (form.controls.name.hasError('required')) {
@@ -23,15 +23,15 @@
               </mat-form-field>
             </div>
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline">
                 <mat-label>Logo url (optional)</mat-label>
                 <input matInput type="text" formControlName="logoUrl" />
               </mat-form-field>
             </div>
           </div>
-          <div class="form-field-group flex-row-10 space-between">
+          <div class="form-field-group">
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="text" formControlName="email" />
                 @if (form.controls.email.hasError('required')) {
@@ -43,7 +43,7 @@
               </mat-form-field>
             </div>
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Phone</mat-label>
                 <app-phone-input [required]="true" formControlName="phone"></app-phone-input>
                 @if (form.controls.phone.hasError('required')) {
@@ -55,15 +55,21 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="form-field-group flex-row-10 space-between">
+          <div class="form-field-group">
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline">
                 <mat-label>Country</mat-label>
-                <input matInput type="text" formControlName="country" />
+                <mat-select formControlName="country">
+                  @for (c of countries(); track c.iso2) {
+                    <mat-option [value]="c.name">
+                      {{c.name}}
+                    </mat-option>
+                  }
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-field">
+              <mat-form-field appearance="outline">
                 <mat-label>Address</mat-label>
                 <input matInput type="text" formControlName="address" />
                 @if (form.controls.address.hasError('required')) {
@@ -79,8 +85,8 @@
       </form>
     </mat-card-content>
     <mat-card-actions class="card__actions flex-row space-between">
-      <button mat-button (click)="submit(true)">Skip for now</button>
-      <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="submit(false)">
+      <button matButton="outlined" (click)="submit(true)">Skip for now</button>
+      <button matButton="filled" type="submit" [disabled]="form.invalid" (click)="submit(false)">
         Finish Sign Up
       </button>
     </mat-card-actions>

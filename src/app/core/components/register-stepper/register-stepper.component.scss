@@ -1,10 +1,21 @@
-.wrapper {
-  margin-top: 30px;
+.stepper {
+  padding: 30px;
   display: flex;
   justify-content: center;
-  gap: 30px;
+  &__steps-container {
+    flex: 1;
+  }
+  &__form-container {
+    flex: 2;
+  }
+
+  .selected-item-icon {
+    color: var(--accent-color-light);
+  }
 }
 
-.selected-item-icon {
-  color: var(--accent-color-light);
+@media(max-width: 850px)  {
+  .stepper {
+    flex-wrap: wrap;
+  }
 }

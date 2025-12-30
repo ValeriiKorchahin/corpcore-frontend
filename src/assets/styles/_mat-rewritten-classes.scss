@@ -28,6 +28,11 @@ body {
   background-color: var(--form-field-background-color) !important;
 }
 
+.mat-mdc-form-field {
+  width: 100% !important;
+  margin-bottom: 5px !important;
+}
+
 // CompanyService select located in header section
 .company-select-field {
   .mat-mdc-text-field-wrapper {
