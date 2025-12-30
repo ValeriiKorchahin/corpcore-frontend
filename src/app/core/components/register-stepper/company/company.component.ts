@@ -60,7 +60,10 @@ export class CompanyComponent implements OnInit {
       }),
       logoUrl: new FormControl(''),
       country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      phone: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      phone: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
       email: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required, Validators.email],

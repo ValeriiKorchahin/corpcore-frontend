@@ -43,7 +43,7 @@
               </mat-form-field>
             </div>
             <div class="form-field">
-              <mat-form-field appearance="outline" floatLabel="always" class="form-field">
+              <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Phone</mat-label>
                 <app-phone-input [required]="true" formControlName="phone"></app-phone-input>
                 @if (form.controls.phone.hasError('required')) {
