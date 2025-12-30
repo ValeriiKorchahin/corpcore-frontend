@@ -62,7 +62,7 @@
                 <mat-select formControlName="country">
                   @for (c of countries(); track c.iso2) {
                     <mat-option [value]="c.name">
-                      {{c.name}}
+                      {{ c.name }}
                     </mat-option>
                   }
                 </mat-select>
