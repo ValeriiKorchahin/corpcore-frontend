@@ -1,7 +1,7 @@
 <header class="header flex-row space-between">
   @if (currentUser()) {
     <div class="header__left-section flex-row">
-      <button class="menu-toggle-btn" mat-icon-button matTooltip="Toggle menu">
+      <button class="toggle-btn" mat-icon-button matTooltip="Toggle menu">
         <mat-icon> menu </mat-icon>
       </button>
     </div>
@@ -17,6 +17,20 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <button class="toggle-btn" [matMenuTriggerFor]="settingsMenu" mat-icon-button matTooltip="Settings">
+        <mat-icon>
+          settings
+        </mat-icon>
+      </button>
     </div>
   }
 </header>
+
+<mat-menu #settingsMenu>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>
+      logout
+    </mat-icon>
+    Logout
+  </button>
+</mat-menu>
