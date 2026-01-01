@@ -1,8 +1,7 @@
 .header {
   padding: 10px;
-  height: 50px;
+  min-height: 50px;
   background-color: var(--primary-color);
-  flex-wrap: wrap;
 
   .toggle-btn {
     background-color: var(--accent-color-light);

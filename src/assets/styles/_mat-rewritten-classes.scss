@@ -108,3 +108,10 @@ body {
     )
   );
 }
+
+.button-link-active {
+  @include mat.button-overrides((
+    protected-container-color: var(--primary-color),
+    protected-label-text-color: var(--accent-color-light),
+  ));
+}

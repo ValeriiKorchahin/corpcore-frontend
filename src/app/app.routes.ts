@@ -23,4 +23,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/components/home/home.component').then((x) => x.HomeComponent),
   },
+  {
+    path: 'organization',
+    canActivate: [authGuard],
+    loadChildren: () => import('./core/components/organization/organization.routes')
+      .then(x => x.organizationRoutes)
+  }
 ];
