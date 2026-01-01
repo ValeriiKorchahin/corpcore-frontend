@@ -115,3 +115,22 @@ body {
     protected-label-text-color: var(--accent-color-light),
   ));
 }
+
+.table-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
+
+  .mat-mdc-header-row {
+    background-color: var(--primary-color);
+    color: var(--accent-color-light);
+  }
+  .mat-mdc-paginator-container {
+    background-color: #e2e2e2;
+  }
+  .mat-mdc-row {
+    background-color: var(--accent-color-light);
+  }
+}
