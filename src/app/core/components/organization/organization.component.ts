@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatButton, MatFabButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -12,7 +12,6 @@ import { MatIcon } from '@angular/material/icon';
     RouterLink,
     RouterLinkActive,
     MatCard,
-    MatFabButton,
     MatIcon
   ],
   templateUrl: './organization.component.html',
