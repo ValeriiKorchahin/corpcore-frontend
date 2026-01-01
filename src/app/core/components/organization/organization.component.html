@@ -1,0 +1,20 @@
+<div class="organization">
+  <mat-card>
+  <nav class="organization__navigation flex-row-10 flex-wrap">
+    @for (button of navigation(); track button.title;) {
+      <a matButton="elevated"
+         class="link"
+         routerLinkActive="button-link-active"
+         [routerLink]="'/organization' + button.link">
+        <mat-icon>
+          {{button.icon}}
+        </mat-icon>
+        {{button.title}}
+      </a>
+    }
+  </nav>
+  </mat-card>
+  <div class="organization__component-container">
+    <router-outlet/>
+  </div>
+</div>
