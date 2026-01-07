@@ -11,7 +11,6 @@ export const jwtExpirationInterceptor: HttpInterceptorFn = (req, next) => {
   const notificationService = inject(NotificationsService);
   const token = jwtService.token;
 
-
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 && token) {
@@ -19,6 +18,6 @@ export const jwtExpirationInterceptor: HttpInterceptorFn = (req, next) => {
         notificationService.showMessage('Session has expired. Please, log in again.', 'info');
       }
       throw new Error(err.message);
-    })
+    }),
   );
 };
