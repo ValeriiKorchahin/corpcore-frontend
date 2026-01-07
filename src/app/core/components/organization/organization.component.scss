@@ -1,0 +1,12 @@
+.organization {
+  padding: 20px;
+  &__navigation {
+    padding: 10px;
+    .link {
+      flex: 1;
+    }
+  }
+  &__component-container {
+    margin-top: 30px;
+  }
+}
