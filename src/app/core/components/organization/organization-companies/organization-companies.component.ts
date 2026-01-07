@@ -8,9 +8,12 @@ import {
   MatCellDef,
   MatColumnDef,
   MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
   MatRowDef,
-  MatTable
+  MatTable,
 } from '@angular/material/table';
 import { ICompany } from '../../../models/ICompany.interface';
 import { OrganizationService } from '../../../services/organization.service';
@@ -44,18 +47,17 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
     MatMenuItem,
     MatMenuTrigger,
     MatTooltip,
-    MatPaginator
+    MatPaginator,
   ],
   templateUrl: './organization-companies.component.html',
   styleUrl: './organization-companies.component.scss',
 })
 export class OrganizationCompaniesComponent implements OnInit {
-
   public search = new FormControl('');
   public companies = signal<ICompany[]>([]);
   public pagination = signal<IPagination>({
     page: 1,
-    limit: 20
+    limit: 20,
   });
   public displayedColumns = signal(['name', 'email', 'phone', 'country', 'actions']);
   private readonly organizationService = inject(OrganizationService);
@@ -67,14 +69,16 @@ export class OrganizationCompaniesComponent implements OnInit {
   changePage(e: PageEvent) {
     this.pagination.set({
       limit: e.pageSize,
-      page: e.pageIndex + 1
+      page: e.pageIndex + 1,
     });
     this.getCompanies();
   }
 
   private getCompanies(search?: string) {
-    this.organizationService.getOrganizationCompanies(this.pagination(), search).subscribe((res) => {
-      this.companies.set(res.data);
-    });
+    this.organizationService
+      .getOrganizationCompanies(this.pagination(), search)
+      .subscribe((res) => {
+        this.companies.set(res.data);
+      });
   }
 }

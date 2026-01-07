@@ -26,7 +26,9 @@ export const routes: Routes = [
   {
     path: 'organization',
     canActivate: [authGuard],
-    loadChildren: () => import('./core/components/organization/organization.routes')
-      .then(x => x.organizationRoutes)
-  }
+    loadChildren: () =>
+      import('./core/components/organization/organization.routes').then(
+        (x) => x.organizationRoutes,
+      ),
+  },
 ];

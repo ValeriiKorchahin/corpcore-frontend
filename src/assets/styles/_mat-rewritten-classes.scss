@@ -110,18 +110,20 @@ body {
 }
 
 .button-link-active {
-  @include mat.button-overrides((
-    protected-container-color: var(--primary-color),
-    protected-label-text-color: var(--accent-color-light),
-  ));
+  @include mat.button-overrides(
+    (
+      protected-container-color: var(--primary-color),
+      protected-label-text-color: var(--accent-color-light),
+    )
+  );
 }
 
 .table-container {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0 1px 5px -1px rgba(0,0,0,0.75);
+  box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.75);
 
   .mat-mdc-header-row {
     background-color: var(--primary-color);

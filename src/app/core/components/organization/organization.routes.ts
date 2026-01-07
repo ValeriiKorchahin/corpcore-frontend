@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const organizationRoutes: Routes = [
   {
     path: '',
-    loadComponent:() => import('./organization.component').then(x => x.OrganizationComponent),
+    loadComponent: () => import('./organization.component').then((x) => x.OrganizationComponent),
     children: [
       {
         path: '',
@@ -12,14 +12,18 @@ export const organizationRoutes: Routes = [
       },
       {
         path: 'companies',
-        loadComponent:() => import('./organization-companies/organization-companies.component')
-          .then(x => x.OrganizationCompaniesComponent),
+        loadComponent: () =>
+          import('./organization-companies/organization-companies.component').then(
+            (x) => x.OrganizationCompaniesComponent,
+          ),
       },
       {
         path: 'users',
-        loadComponent: () => import('./organization-user/organization-user.component')
-          .then(x => x.OrganizationUserComponent),
-      }
-    ]
-  }
+        loadComponent: () =>
+          import('./organization-user/organization-user.component').then(
+            (x) => x.OrganizationUserComponent,
+          ),
+      },
+    ],
+  },
 ];

@@ -3,7 +3,7 @@ export interface IPagination {
   page: number | null;
 }
 
-export interface IPaginatedResponse<T>{
+export interface IPaginatedResponse<T> {
   data: T;
   total: number;
   page: number;

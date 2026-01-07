@@ -11,7 +11,6 @@ import { NotificationsService } from './notifications.service';
   providedIn: 'root',
 })
 export class OrganizationService {
-
   private readonly apiService = inject(ApiService);
   private readonly notificationsService = inject(NotificationsService);
 
@@ -20,14 +19,16 @@ export class OrganizationService {
     if (search) {
       params.set('search', search);
     }
-    return this.apiService.post<IPagination, IPaginatedResponse<ICompany[]>>('companies/list', pagination, {
-      params: params
-    }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.notificationsService.showMessage(error.error?.error, 'error');
-        throw new Error(error.message);
+    return this.apiService
+      .post<IPagination, IPaginatedResponse<ICompany[]>>('companies/list', pagination, {
+        params: params,
       })
-    );
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.notificationsService.showMessage(error.error?.error, 'error');
+          throw new Error(error.message);
+        }),
+      );
   }
 
   getOrganizationUsers(pagination: IPagination, search?: string) {
@@ -35,14 +36,15 @@ export class OrganizationService {
     if (search) {
       params.set('search', search);
     }
-    return this.apiService.post<IPagination, IPaginatedResponse<IUser[]>>('users/list', pagination, {
-      params: params
-    }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.notificationsService.showMessage(error.error?.error, 'error');
-        throw new Error(error.message);
+    return this.apiService
+      .post<IPagination, IPaginatedResponse<IUser[]>>('users/list', pagination, {
+        params: params,
       })
-    );
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.notificationsService.showMessage(error.error?.error, 'error');
+          throw new Error(error.message);
+        }),
+      );
   }
-
 }

@@ -6,29 +6,21 @@ import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-organization',
-  imports: [
-    MatButton,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    MatCard,
-    MatIcon
-  ],
+  imports: [MatButton, RouterOutlet, RouterLink, RouterLinkActive, MatCard, MatIcon],
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss',
 })
 export class OrganizationComponent {
-
   public readonly navigation = signal([
     {
       title: 'Companies',
       icon: 'source_environment',
-      link: '/companies'
+      link: '/companies',
     },
     {
-     title: 'Users',
+      title: 'Users',
       icon: 'supervisor_account',
-     link: '/users'
+      link: '/users',
     },
   ]);
   private readonly router = inject(Router);
