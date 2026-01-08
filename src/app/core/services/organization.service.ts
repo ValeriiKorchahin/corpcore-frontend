@@ -15,9 +15,9 @@ export class OrganizationService {
   private readonly notificationsService = inject(NotificationsService);
 
   getOrganizationCompanies(pagination: IPagination, search?: string) {
-    const params = new HttpParams();
+    let params = null;
     if (search) {
-      params.set('search', search);
+     params = new HttpParams().set('search', search);
     }
     return this.apiService
       .post<IPagination, IPaginatedResponse<ICompany[]>>('companies/list', pagination, {

@@ -7,6 +7,7 @@ import { OrganizationService } from '../../../services/organization.service';
 import { tapResponse } from '@ngrx/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from '../../../services/notifications.service';
+import { IPagination } from '../../../models/IPagination.interface';
 
 type OrgCompaniesState = {
   isLoading: boolean;
@@ -29,51 +30,64 @@ const initialState: OrgCompaniesState = {
 export const OrgCompaniesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods((store, service = inject(OrganizationService)) => ({
-    load: rxMethod<void>(
+  withMethods((store) => {
+    const organizationService = inject(OrganizationService);
+    const notificationsService = inject(NotificationsService);
+
+    const getCompanies$ = rxMethod<void>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() => {
           const { page, limit, filter } = store;
-          const notificationsService = inject(NotificationsService);
-          return service.getOrganizationCompanies({ page: page(), limit: limit() }, filter()).pipe(
-            tapResponse({
-              next: (res) => {
-                patchState(store, {
-                  isLoading: false,
-                  companies: res.data,
-                  limit: res.limit,
-                  page: res.page,
-                  total: res.total
-                });
-              },
-              error: (err: HttpErrorResponse) => {
-                notificationsService.showMessage(err.error?.error, 'error');
-                patchState(store, {
-                  isLoading: false,
-                });
-              }
-            })
-          );
-        })
-      )
-    ),
-    filter: rxMethod<string>(
-      pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((filterValue) => {
-          patchState(store, {
-            filter: filterValue,
-            page: 1
-          });
-          // TODO: Implement proper logic and reuse it for fetching data
-          return of(filterValue);
-        })
-      )
-    )
-  })
-  )
-)
+          debugger;
+          return organizationService
+            .getOrganizationCompanies({ page: page(), limit: limit() }, filter())
+            .pipe(
+              tapResponse({
+                next: (res) => {
+                  patchState(store, {
+                    isLoading: false,
+                    companies: res.data,
+                    limit: res.limit,
+                    page: res.page,
+                    total: res.total,
+                  });
+                },
+                error: (err: HttpErrorResponse) => {
+                  notificationsService.showMessage(err.error?.error, 'error');
+                  patchState(store, {
+                    isLoading: false,
+                  });
+                },
+              }),
+            );
+        }),
+      ),
+    );
 
-
+    return {
+      load: () => getCompanies$(),
+      filter: rxMethod<string>(
+        pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          tap((filterString) => {
+            patchState(store, {
+              filter: filterString,
+              page: 1,
+            });
+            debugger;
+            getCompanies$();
+          }),
+        ),
+      ),
+      changePage(paginationOpts: IPagination) {
+        patchState(store, {
+          page: paginationOpts.page,
+          limit: paginationOpts.limit,
+        });
+        getCompanies$();
+      },
+    };
+  }),
+);

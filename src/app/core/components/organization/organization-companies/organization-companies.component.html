@@ -2,11 +2,11 @@
   <div class="card__header">
     <mat-form-field appearance="outline">
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput type="text" [formControl]="search" placeholder="Search by name" />
+      <input matInput type="text" placeholder="Search by name" (input)="setFilter($event)" />
     </mat-form-field>
   </div>
   <div class="card__table-container table-container">
-    <table mat-table [dataSource]="companies()">
+    <table mat-table [dataSource]="orgCompaniesStore.companies()">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -44,11 +44,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
     </table>
-    <mat-paginator
-      [length]="companies().length"
-      (page)="changePage($event)"
-      [pageSizeOptions]="[20, 50, 100]"
-    ></mat-paginator>
+    <mat-paginator (page)="setPagination($event)" [length]="orgCompaniesStore.total()" [pageSizeOptions]="[20, 50, 100]"></mat-paginator>
   </div>
 </mat-card>
 

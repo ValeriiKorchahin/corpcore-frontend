@@ -1,6 +1,6 @@
 export interface IPagination {
-  limit: number | null;
-  page: number | null;
+  limit: number;
+  page: number;
 }
 
 export interface IPaginatedResponse<T> {
