@@ -39,7 +39,6 @@ export const OrgCompaniesStore = signalStore(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() => {
           const { page, limit, filter } = store;
-          debugger;
           return organizationService
             .getOrganizationCompanies({ page: page(), limit: limit() }, filter())
             .pipe(
@@ -76,7 +75,6 @@ export const OrgCompaniesStore = signalStore(
               filter: filterString,
               page: 1,
             });
-            debugger;
             getCompanies$();
           }),
         ),
