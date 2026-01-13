@@ -1,0 +1,10 @@
+.card {
+  padding: 20px;
+  &__header {
+    margin-bottom: 20px;
+  }
+  .role-select {
+    margin-top: 10px;
+    width: 50%;
+  }
+}

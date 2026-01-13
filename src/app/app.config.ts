@@ -31,5 +31,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtInterceptor, jwtExpirationInterceptor])),
     provideAppInitializer(authInitializer),
-  ],
+],
 };

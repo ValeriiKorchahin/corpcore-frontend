@@ -15,9 +15,9 @@ export class OrganizationService {
   private readonly notificationsService = inject(NotificationsService);
 
   getOrganizationCompanies(pagination: IPagination, search?: string) {
-    let params = null;
+    let params = new HttpParams();
     if (search) {
-     params = new HttpParams().set('search', search);
+     params = params.set('search', search);
     }
     return this.apiService
       .post<IPagination, IPaginatedResponse<ICompany[]>>('companies/list', pagination, {
@@ -32,9 +32,9 @@ export class OrganizationService {
   }
 
   getOrganizationUsers(pagination: IPagination, search?: string) {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (search) {
-      params.set('search', search);
+     params = params.set('search', search);
     }
     return this.apiService
       .post<IPagination, IPaginatedResponse<IUser[]>>('users/list', pagination, {

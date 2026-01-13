@@ -44,7 +44,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
     </table>
-    <mat-paginator (page)="setPagination($event)" [length]="orgCompaniesStore.total()" [pageSizeOptions]="[20, 50, 100]"></mat-paginator>
+    <mat-paginator (page)="setPagination($event)"
+                   [length]="orgCompaniesStore.total()"
+                   [pageSizeOptions]="[20, 50, 100]">
+    </mat-paginator>
   </div>
 </mat-card>
 
