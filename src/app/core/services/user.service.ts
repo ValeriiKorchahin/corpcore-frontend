@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { IOrganization } from '../models/IOrganization.interface';
 import { NotificationsService } from './notifications.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CompanyService } from './company.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,21 +20,10 @@ export class UserService {
   private readonly jwtService = inject(JwtService);
   private readonly router = inject(Router);
   private readonly notificationsService = inject(NotificationsService);
+  private readonly companiesService = inject(CompanyService);
 
   get user() {
     return this._user.asReadonly();
-  }
-
-  get userCompanies() {
-    return this._userCompanies.asReadonly();
-  }
-
-  getUserCompanies(): Observable<IOrganization[]> {
-    return this.apiService.get<IOrganization[]>('companies/user').pipe(
-      tap((companies) => {
-        this._userCompanies.set(companies);
-      }),
-    );
   }
 
   getCurrentUser(): Observable<IOrganization[]> {
@@ -41,7 +31,7 @@ export class UserService {
       tap((user) => {
         this._user.set(user);
       }),
-      switchMap(() => this.getUserCompanies()),
+      switchMap(() => this.companiesService.getUserCompanies()),
     );
   }
 

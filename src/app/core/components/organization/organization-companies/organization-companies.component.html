@@ -1,13 +1,17 @@
 <mat-card class="card">
-  <div class="card__header">
-    <mat-form-field appearance="outline">
+  <div class="card__header flex-row-10">
+    <mat-form-field appearance="outline" class="filter-field">
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput type="text" placeholder="Search by name" (input)="setFilter($event)" />
+      <input matInput type="text" placeholder="Search by name" (input)="setFilter($event)"/>
     </mat-form-field>
+    <button matButton="elevated" class="btn-add" (click)="openCompany()">
+      <mat-icon>add</mat-icon>
+      Add Company
+    </button>
   </div>
   <div class="card__table-container table-container">
     @if (orgCompaniesStore.isLoading()) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     }
     <table mat-table [dataSource]="orgCompaniesStore.companies()">
       <!-- Name Column -->
@@ -38,8 +42,11 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button [matMenuTriggerFor]="actionsMenu" matTooltip="Actions">
-            <mat-icon> more_vert </mat-icon>
+          <button mat-icon-button
+                  [matMenuTriggerData]="{company: element}"
+                  [matMenuTriggerFor]="actionsMenu"
+                  matTooltip="Actions">
+            <mat-icon> more_vert</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -55,16 +62,18 @@
 </mat-card>
 
 <mat-menu #actionsMenu>
-  <button mat-menu-item>
-    <mat-icon> person_add </mat-icon>
-    Add user
-  </button>
-  <button mat-menu-item>
-    <mat-icon> edit </mat-icon>
-    Edit/View
-  </button>
-  <button mat-menu-item>
-    <mat-icon> delete </mat-icon>
-    Delete
-  </button>
+  <ng-template matMenuContent let-company="company">
+    <button mat-menu-item>
+      <mat-icon> person_add</mat-icon>
+      Add user
+    </button>
+    <button mat-menu-item (click)="openCompany(company)">
+      <mat-icon> edit</mat-icon>
+      Edit/View
+    </button>
+    <button mat-menu-item>
+      <mat-icon> delete</mat-icon>
+      Delete
+    </button>
+  </ng-template>
 </mat-menu>

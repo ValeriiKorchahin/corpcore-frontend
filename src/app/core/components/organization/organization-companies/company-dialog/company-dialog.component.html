@@ -1,0 +1,90 @@
+<h3 matDialogTitle>{{ data ? 'Edit' : 'Add' }} Company</h3>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="card__form">
+      <div class="form-field-group">
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Company name</mat-label>
+            <input matInput type="text" formControlName="name" />
+            @if (form.controls.name.hasError('required')) {
+              <mat-error>Name is required</mat-error>
+            }
+            @if (form.controls.name.hasError('minlength')) {
+              <mat-error>Must be at least 2 characters long</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Logo url (optional)</mat-label>
+            <input matInput type="text" formControlName="logoUrl" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field-group">
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email" />
+            @if (form.controls.email.hasError('required')) {
+              <mat-error>Email is required</mat-error>
+            }
+            @if (form.controls.email.hasError('email')) {
+              <mat-error>Invalid email</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="form-field">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Phone</mat-label>
+            <app-phone-input [required]="true" formControlName="phone"></app-phone-input>
+            @if (form.controls.phone.hasError('required')) {
+              <mat-error>Phone is required</mat-error>
+            }
+            @if (form.controls.phone.hasError('invalidPhone')) {
+              <mat-error>Invalid phone</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-field-group">
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              @for (c of countries(); track c.iso2) {
+                <mat-option [value]="c.name">
+                  {{ c.name }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (form.controls.country.hasError('required')) {
+              <mat-error>Country is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput type="text" formControlName="address" />
+            @if (form.controls.address.hasError('required')) {
+              <mat-error>Address is required</mat-error>
+            }
+            @if (form.controls.address.hasError('minlength')) {
+              <mat-error>Must be at least 5 characters long</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton
+          type="submit"
+          [disabled]="form.invalid"
+          (click)="submit()"
+  >Submit</button>
+</mat-dialog-actions>

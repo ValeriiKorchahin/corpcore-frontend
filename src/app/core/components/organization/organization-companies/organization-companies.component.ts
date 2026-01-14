@@ -15,12 +15,15 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
-import { MatIconButton } from '@angular/material/button';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenu, MatMenuContent, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OrgCompaniesStore } from './organization-companies-store';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { ICompany } from '../../../models/ICompany.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { CompanyDialogComponent } from './company-dialog/company-dialog.component';
 
 @Component({
   selector: 'app-organization-companies',
@@ -48,6 +51,8 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatTooltip,
     MatPaginator,
     MatProgressBar,
+    MatButton,
+    MatMenuContent,
   ],
   templateUrl: './organization-companies.component.html',
   styleUrl: './organization-companies.component.scss',
@@ -55,6 +60,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 export class OrganizationCompaniesComponent implements OnInit {
   public displayedColumns = signal(['name', 'email', 'phone', 'country', 'actions']);
   protected readonly orgCompaniesStore = inject(OrgCompaniesStore);
+  private readonly dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.orgCompaniesStore.load();
@@ -72,5 +78,20 @@ export class OrganizationCompaniesComponent implements OnInit {
       limit: e.pageSize,
     };
     this.orgCompaniesStore.changePage(pagination);
+  }
+
+  openCompany(company?: ICompany) {
+    const dialogRef = this.dialog.open(CompanyDialogComponent, {
+      data: company
+    });
+
+    dialogRef.afterClosed().subscribe((result: ICompany) => {
+      if (result) {
+        return company?.id ?
+          this.orgCompaniesStore.editCompany({company: result, id: company.id}) :
+          this.orgCompaniesStore.addCompany(result);
+      }
+      return null;
+    });
   }
 }

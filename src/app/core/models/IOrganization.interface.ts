@@ -1,5 +1,5 @@
 export interface IOrganization {
-  id: string;
+  id?: string;
   name: string;
   role?: number;
 }
