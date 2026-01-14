@@ -20,6 +20,7 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OrgCompaniesStore } from './organization-companies-store';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-organization-companies',
@@ -46,6 +47,7 @@ import { OrgCompaniesStore } from './organization-companies-store';
     MatMenuTrigger,
     MatTooltip,
     MatPaginator,
+    MatProgressBar,
   ],
   templateUrl: './organization-companies.component.html',
   styleUrl: './organization-companies.component.scss',
