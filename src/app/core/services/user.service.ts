@@ -15,7 +15,6 @@ import { CompanyService } from './company.service';
 })
 export class UserService {
   private _user = signal<IUser | null>(null);
-  private _userCompanies = signal<IOrganization[]>([]);
   private readonly apiService = inject(ApiService);
   private readonly jwtService = inject(JwtService);
   private readonly router = inject(Router);

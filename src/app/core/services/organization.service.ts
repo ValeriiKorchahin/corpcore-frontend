@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { ICompany } from '../models/ICompany.interface';
 import { IUser } from '../models/IUser.interface';
 import { IPaginatedResponse, IPagination } from '../models/IPagination.interface';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
