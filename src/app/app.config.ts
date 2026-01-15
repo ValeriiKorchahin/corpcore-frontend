@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   inject,
   provideAppInitializer,
-  provideBrowserGlobalErrorListeners,
+  provideBrowserGlobalErrorListeners, isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -12,6 +12,7 @@ import { jwtInterceptor } from './core/interceptors/jwt-interceptor';
 import { UserService } from './core/services/user.service';
 import { firstValueFrom } from 'rxjs';
 import { jwtExpirationInterceptor } from './core/interceptors/jwt-expiration-interceptor';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export async function authInitializer() {
   const userService = inject(UserService);
@@ -31,5 +32,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtInterceptor, jwtExpirationInterceptor])),
     provideAppInitializer(authInitializer),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ],
 };

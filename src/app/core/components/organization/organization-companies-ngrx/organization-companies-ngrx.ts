@@ -10,11 +10,18 @@ import {
 } from '@angular/material/table';
 import { MatFormField, MatInput, MatPrefix } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
-import { MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenu, MatMenuContent, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTooltip } from '@angular/material/tooltip';
 import { OrgCompaniesStore } from '../organization-companies/organization-companies-store';
+import { OrgCompaniesEventStore } from './org-companies-event-store';
+import { Dispatcher } from '@ngrx/signals/events';
+import { orgCompaniesEvents } from './org-companies-events';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { ICompany } from '../../../models/ICompany.interface';
+import { CompanyDialogComponent } from '../organization-companies/company-dialog/company-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-organization-companies-ngrx',
@@ -38,23 +45,29 @@ import { OrgCompaniesStore } from '../organization-companies/organization-compan
     MatRowDef,
     MatTable,
     MatTooltip,
-    MatHeaderCellDef
+    MatHeaderCellDef,
+    MatMenuTrigger,
+    MatProgressBar,
+    MatMenuContent,
+    MatButton
   ],
   templateUrl: './organization-companies-ngrx.html',
   styleUrl: './organization-companies-ngrx.scss',
 })
 export class OrganizationCompaniesNgrx implements OnInit {
   public displayedColumns = signal(['name', 'email', 'phone', 'country', 'actions']);
-  protected readonly orgCompaniesStore = inject(OrgCompaniesStore);
+  public readonly store = inject(OrgCompaniesEventStore);
+  readonly #dispatcher = inject(Dispatcher);
+  readonly #dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.orgCompaniesStore.load();
+    this.#dispatcher.dispatch(orgCompaniesEvents.open());
   }
 
   setFilter(e: Event) {
     const filter = (e.target as HTMLInputElement).value;
-    console.log(filter);
-    this.orgCompaniesStore.filter(filter);
+    this.#dispatcher.dispatch(orgCompaniesEvents.filter(filter));
+
   }
 
   setPagination(e: PageEvent) {
@@ -62,6 +75,21 @@ export class OrganizationCompaniesNgrx implements OnInit {
       page: e.pageIndex + 1,
       limit: e.pageSize,
     };
-    this.orgCompaniesStore.changePage(pagination);
+    this.#dispatcher.dispatch(orgCompaniesEvents.pageChange(pagination));
+  }
+
+  openCompany(company?: ICompany) {
+    const dialogRef = this.#dialog.open(CompanyDialogComponent, {
+      data: company
+    });
+
+    dialogRef.afterClosed().subscribe((result: ICompany) => {
+      if (result) {
+        return company?.id ?
+          this.#dispatcher.dispatch(orgCompaniesEvents.editCompany({ companyId: company.id, company: result })) :
+          this.#dispatcher.dispatch(orgCompaniesEvents.addCompany(result));
+      }
+      return null;
+    });
   }
 }

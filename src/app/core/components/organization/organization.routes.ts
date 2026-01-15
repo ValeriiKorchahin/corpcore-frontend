@@ -13,8 +13,8 @@ export const organizationRoutes: Routes = [
       {
         path: 'companies',
         loadComponent: () =>
-          import('./organization-companies/organization-companies.component').then(
-            (x) => x.OrganizationCompaniesComponent,
+          import('./organization-companies-ngrx/organization-companies-ngrx').then(
+            (x) => x.OrganizationCompaniesNgrx
           ),
       },
       {
