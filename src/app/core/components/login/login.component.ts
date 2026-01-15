@@ -16,6 +16,7 @@ import { UserService } from '../../services/user.service';
 import { ILogin } from '../../models/ILogin.interface';
 import { RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { CompanyService } from '../../services/company.service';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
   public isPasswordVisible = false;
 
   private readonly userService = inject(UserService);
+  private readonly companiesService = inject(CompanyService);
 
   ngOnInit() {
     this.createFormGroup();
@@ -58,7 +60,7 @@ export class LoginComponent implements OnInit {
     const credentials = this.form.value as ILogin;
     this.userService
       .login(credentials)
-      .pipe(switchMap(() => this.userService.getUserCompanies()))
+      .pipe(switchMap(() => this.companiesService.getUserCompanies()))
       .subscribe();
   }
 

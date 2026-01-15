@@ -38,6 +38,7 @@ export const OrgUserStore = signalStore(
     const getUsers$ = rxMethod<void>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
+        debounceTime(600),
         switchMap(() => {
           const { page, limit, filter } = store;
           return organizationService.getOrganizationUsers({ page: page(), limit: limit() }, filter())

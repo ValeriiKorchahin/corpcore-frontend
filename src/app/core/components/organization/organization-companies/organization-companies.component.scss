@@ -2,5 +2,11 @@
   padding: 20px;
   &__header {
     margin-bottom: 20px;
+    .filter-field {
+      flex: 1;
+    }
+    .btn-add {
+      flex: 0.5;
+    }
   }
 }

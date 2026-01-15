@@ -83,7 +83,7 @@ export class RegisterStepperComponent {
       .register(register)
       .pipe(
         switchMap(() => (company ? this.companyService.create(company) : of(null))),
-        switchMap(() => this.userService.getUserCompanies()),
+        switchMap(() => this.companyService.getUserCompanies()),
       )
       .subscribe(() => this.router.navigate(['/']));
   }

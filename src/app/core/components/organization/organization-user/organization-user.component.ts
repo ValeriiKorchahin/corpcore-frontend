@@ -19,6 +19,7 @@ import { IPagination } from '../../../models/IPagination.interface';
 import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
 import { OrganizationRoleEnum } from '../../../utils/enums/OrganizationRole.enum';
 import { IUser } from '../../../models/IUser.interface';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-organization-user',
@@ -46,6 +47,7 @@ import { IUser } from '../../../models/IUser.interface';
     MatMenuTrigger,
     MatSelect,
     MatOption,
+    MatProgressBar,
   ],
   templateUrl: './organization-user.component.html',
   styleUrl: './organization-user.component.scss',
