@@ -102,7 +102,7 @@ export const OrgCompaniesEventStore = signalStore(
               )
             )
           ),
-        add: events.on(orgCompaniesEvents.addCompany).pipe(
+        add$: events.on(orgCompaniesEvents.addCompany).pipe(
           switchMap(
             ({ payload }) =>
             companiesService.create(payload))
