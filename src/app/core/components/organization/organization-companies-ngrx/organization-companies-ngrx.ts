@@ -61,7 +61,7 @@ export class OrganizationCompaniesNgrx implements OnInit {
   readonly #dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.#dispatcher.dispatch(orgCompaniesEvents.open());
+    this.#dispatcher.dispatch(orgCompaniesEvents.load());
   }
 
   setFilter(e: Event) {

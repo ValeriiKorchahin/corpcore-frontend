@@ -31,7 +31,7 @@ export const OrgCompaniesEventStore = signalStore(
   {providedIn: 'root'},
   withState(initialState),
   withReducer(
-    on(orgCompaniesEvents.open, () => ({
+    on(orgCompaniesEvents.load, () => ({
       isLoading: true
     })),
     on(orgCompaniesEvents.loaded,  ({ payload }) => ({
@@ -79,7 +79,7 @@ export const OrgCompaniesEventStore = signalStore(
       notificationsService = inject(NotificationsService)
     ) => ({
         load$: merge(
-          events.on(orgCompaniesEvents.open, orgCompaniesEvents.pageChange),
+          events.on(orgCompaniesEvents.loaded, orgCompaniesEvents.pageChange),
           events.on(orgCompaniesEvents.filter).pipe(
             debounceTime(500),
             distinctUntilChanged(),

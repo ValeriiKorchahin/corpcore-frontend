@@ -6,7 +6,7 @@ import { ICompany } from '../../../models/ICompany.interface';
 export const orgCompaniesEvents = eventGroup({
   source: '[Organization Companies]',
   events: {
-    open: type<void>(),
+    load: type<void>(),
     loaded: type<
       IPaginatedResponse<ICompany[]>
     >(),
