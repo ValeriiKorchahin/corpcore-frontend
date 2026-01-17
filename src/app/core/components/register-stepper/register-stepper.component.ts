@@ -12,7 +12,6 @@ import {
 import { NgClass } from '@angular/common';
 import { IRegister } from '../../models/ILogin.interface';
 import { NotificationsService } from '../../services/notifications.service';
-import { userStore } from '../../store/user/user-store';
 import { Dispatcher } from '@ngrx/signals/events';
 import { userEvents } from '../../store/user/user-store-events';
 
@@ -52,7 +51,6 @@ export class RegisterStepperComponent {
 
   public selectedIndex = signal(0);
   private readonly notificationsService = inject(NotificationsService);
-  private readonly userStore = inject(userStore);
   readonly #dispatcher = inject(Dispatcher);
 
   finishRegister(skipCompany: boolean) {
