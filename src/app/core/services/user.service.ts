@@ -9,6 +9,7 @@ import { NotificationsService } from './notifications.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Dispatcher } from '@ngrx/signals/events';
 import { userCompaniesEvents } from '../store/user-companies/user-companies-events';
+import { userCompaniesStore } from '../store/user-companies/user-companies-store';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class UserService {
   private readonly router = inject(Router);
   private readonly notificationsService = inject(NotificationsService);
   private readonly dispatcher = inject(Dispatcher);
+  private readonly userCompaniesStore = inject(userCompaniesStore);
 
   get user() {
     return this._user.asReadonly();
