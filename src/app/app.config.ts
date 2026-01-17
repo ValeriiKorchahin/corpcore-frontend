@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   inject,
   provideAppInitializer,
-  provideBrowserGlobalErrorListeners, isDevMode,
+  provideBrowserGlobalErrorListeners, isDevMode, provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -12,6 +12,7 @@ import { UserService } from './core/services/user.service';
 import { firstValueFrom } from 'rxjs';
 import { jwtExpirationInterceptor } from './core/interceptors/jwt-expiration-interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { userCompaniesStore } from './core/store/user-companies/user-companies-store';
 
 export async function authInitializer() {
   const userService = inject(UserService);
@@ -27,6 +28,8 @@ export async function authInitializer() {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    userCompaniesStore,
+    provideZonelessChangeDetection(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtInterceptor, jwtExpirationInterceptor])),

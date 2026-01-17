@@ -7,7 +7,6 @@ import { JwtService } from './jwt.service';
 import { Router } from '@angular/router';
 import { NotificationsService } from './notifications.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { userCompaniesStore } from '../store/user-companies/user-companies-store';
 import { Dispatcher } from '@ngrx/signals/events';
 import { userCompaniesEvents } from '../store/user-companies/user-companies-events';
 
@@ -20,7 +19,6 @@ export class UserService {
   private readonly jwtService = inject(JwtService);
   private readonly router = inject(Router);
   private readonly notificationsService = inject(NotificationsService);
-  private readonly userCompaniesStore = inject(userCompaniesStore);
   private readonly dispatcher = inject(Dispatcher);
 
   get user() {
