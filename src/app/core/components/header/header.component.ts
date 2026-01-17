@@ -7,7 +7,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { UserService } from '../../services/user.service';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { CompanyService } from '../../services/company.service';
+import { userCompaniesStore } from '../../store/user-companies/user-companies-store';
 
 @Component({
   selector: 'app-header',
@@ -27,9 +27,8 @@ import { CompanyService } from '../../services/company.service';
 })
 export class HeaderComponent {
   public readonly userService = inject(UserService);
-  public readonly companiesService = inject(CompanyService);
   public currentUser = computed(() => this.userService.user());
-  public companies = computed(() => this.companiesService.userCompanies());
+  public readonly userCompaniesStore = inject(userCompaniesStore);
 
   private readonly router = inject(Router);
 

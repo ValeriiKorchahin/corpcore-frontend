@@ -1,14 +1,15 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { IAuthResponse, ILogin, IRegister } from '../models/ILogin.interface';
-import { catchError, Observable, switchMap, tap } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { IUser } from '../models/IUser.interface';
 import { JwtService } from './jwt.service';
 import { Router } from '@angular/router';
-import { IOrganization } from '../models/IOrganization.interface';
 import { NotificationsService } from './notifications.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CompanyService } from './company.service';
+import { userCompaniesStore } from '../store/user-companies/user-companies-store';
+import { Dispatcher } from '@ngrx/signals/events';
+import { userCompaniesEvents } from '../store/user-companies/user-companies-events';
 
 @Injectable({
   providedIn: 'root',
@@ -19,18 +20,19 @@ export class UserService {
   private readonly jwtService = inject(JwtService);
   private readonly router = inject(Router);
   private readonly notificationsService = inject(NotificationsService);
-  private readonly companiesService = inject(CompanyService);
+  private readonly userCompaniesStore = inject(userCompaniesStore);
+  private readonly dispatcher = inject(Dispatcher);
 
   get user() {
     return this._user.asReadonly();
   }
 
-  getCurrentUser(): Observable<IOrganization[]> {
+  getCurrentUser(): Observable<IUser> {
     return this.apiService.get<IUser>('users/current').pipe(
       tap((user) => {
+        this.dispatcher.dispatch(userCompaniesEvents.load());
         this._user.set(user);
       }),
-      switchMap(() => this.companiesService.getUserCompanies()),
     );
   }
 
@@ -55,6 +57,7 @@ export class UserService {
         this.populateUserAfterAuth(res);
         this.notificationsService.showMessage('Registered successfully', 'success');
         this.jwtService.setToken(res.token);
+        this.router.navigate(['/']);
       }),
       catchError((err: HttpErrorResponse) => {
         this.notificationsService.showMessage(err.error?.error, 'error');

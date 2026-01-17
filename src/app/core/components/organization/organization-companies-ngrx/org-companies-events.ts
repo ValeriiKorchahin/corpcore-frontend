@@ -4,7 +4,7 @@ import { IPaginatedResponse } from '../../../models/IPagination.interface';
 import { ICompany } from '../../../models/ICompany.interface';
 
 export const orgCompaniesEvents = eventGroup({
-  source: '[Organization Companies]',
+  source: 'Organization Companies',
   events: {
     load: type<void>(),
     loaded: type<

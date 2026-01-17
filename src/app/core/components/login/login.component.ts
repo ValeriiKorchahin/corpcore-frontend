@@ -12,11 +12,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
-import { UserService } from '../../services/user.service';
 import { ILogin } from '../../models/ILogin.interface';
 import { RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
-import { CompanyService } from '../../services/company.service';
+import { userStore } from '../../store/user/user-store';
+import { Dispatcher } from '@ngrx/signals/events';
+import { userEvents } from '../../store/user/user-store-events';
 
 @Component({
   selector: 'app-login',
@@ -48,9 +48,8 @@ export class LoginComponent implements OnInit {
     password: FormControl<string | null>;
   }>;
   public isPasswordVisible = false;
-
-  private readonly userService = inject(UserService);
-  private readonly companiesService = inject(CompanyService);
+  public userStore = inject(userStore);
+  readonly #dispatcher = inject(Dispatcher);
 
   ngOnInit() {
     this.createFormGroup();
@@ -58,10 +57,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     const credentials = this.form.value as ILogin;
-    this.userService
-      .login(credentials)
-      .pipe(switchMap(() => this.companiesService.getUserCompanies()))
-      .subscribe();
+    this.#dispatcher.dispatch(userEvents.login(credentials));
   }
 
   private createFormGroup() {

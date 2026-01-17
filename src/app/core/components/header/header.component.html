@@ -9,7 +9,7 @@
       <div class="form-field flex-col">
         <mat-form-field class="company-select-field">
           <mat-select placeholder="Select company">
-            @for (company of companies(); track company.id) {
+            @for (company of userCompaniesStore.userCompanies(); track company.id) {
               <mat-option [value]="company.id">
                 {{ company.name }}
               </mat-option>

@@ -50,34 +50,11 @@ export class CompanyService {
       catchError((err: HttpErrorResponse) => {
         this.notificationsService.showMessage(err.error?.error, 'error');
         throw new Error(err.message);
-      }),
-      tap((comp) => this.addUserCompany(comp)),
+      })
     );
   }
 
   edit(id: string, company: ICompany): Observable<ICompany> {
-    return this.apiService.put<ICompany, ICompany>(`companies/${id}`, company).pipe(
-      tap((comp) => this.changeCompanyName(comp))
-    );
-  }
-
-  private changeCompanyName(company: ICompany): void {
-    console.log(company);
-    const updatedCompanies = this._userCompanies().map(c =>
-      c.id === company.id ? { id: company.id, name: company.name } : c
-    );
-    console.log(updatedCompanies);
-    this._userCompanies.set(updatedCompanies);
-  }
-
-  private addUserCompany(company: ICompany) {
-    const companyToAdd: IOrganization = {
-      id: company.id,
-      name: company.name,
-    };
-    this._userCompanies.update((value) => {
-      value.push(companyToAdd);
-      return value;
-    });
+    return this.apiService.put<ICompany, ICompany>(`companies/${id}`, company);
   }
 }

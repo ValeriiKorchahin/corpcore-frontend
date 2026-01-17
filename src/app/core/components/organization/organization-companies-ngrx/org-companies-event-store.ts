@@ -1,6 +1,6 @@
 import { ICompany } from '../../../models/ICompany.interface';
 import { signalStore, withState } from '@ngrx/signals';
-import { Events, on, withEventHandlers, withReducer } from '@ngrx/signals/events';
+import { Dispatcher, Events, on, withEventHandlers, withReducer } from '@ngrx/signals/events';
 import { inject } from '@angular/core';
 import { CompanyService } from '../../../services/company.service';
 import { debounceTime, distinctUntilChanged, merge, switchMap } from 'rxjs';
@@ -75,11 +75,12 @@ export const OrgCompaniesEventStore = signalStore(
       (
       store,
       events = inject(Events),
+      dispatcher = inject(Dispatcher),
       companiesService = inject(CompanyService),
       notificationsService = inject(NotificationsService)
     ) => ({
         load$: merge(
-          events.on(orgCompaniesEvents.loaded, orgCompaniesEvents.pageChange),
+          events.on(orgCompaniesEvents.load, orgCompaniesEvents.pageChange),
           events.on(orgCompaniesEvents.filter).pipe(
             debounceTime(500),
             distinctUntilChanged(),
@@ -110,7 +111,7 @@ export const OrgCompaniesEventStore = signalStore(
           mapResponse({
             next: (res) => {
               notificationsService.showMessage('Company added successfully!', 'success');
-              return orgCompaniesEvents.companyAdded(res);
+              return dispatcher.dispatch(orgCompaniesEvents.companyAdded(res));
             },
             error: (err: HttpErrorResponse) => {
               notificationsService.showMessage(err.error?.error, 'error');
@@ -124,7 +125,7 @@ export const OrgCompaniesEventStore = signalStore(
           mapResponse({
             next: (res) => {
               notificationsService.showMessage('Company edited successfully!', 'success');
-              return orgCompaniesEvents.companyEdited(res)
+              return dispatcher.dispatch(orgCompaniesEvents.companyEdited(res));
             },
             error: (err: HttpErrorResponse) => {
               notificationsService.showMessage(err.error?.error, 'error');

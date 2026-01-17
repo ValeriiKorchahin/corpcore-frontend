@@ -1,9 +1,6 @@
 import { Component, inject, Signal, signal, viewChild } from '@angular/core';
 import { RegisterComponent } from './register/register.component';
 import { CompanyComponent } from './company/company.component';
-import { UserService } from '../../services/user.service';
-import { CompanyService } from '../../services/company.service';
-import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatListItem,
@@ -15,7 +12,9 @@ import {
 import { NgClass } from '@angular/common';
 import { IRegister } from '../../models/ILogin.interface';
 import { NotificationsService } from '../../services/notifications.service';
-import { of, switchMap } from 'rxjs';
+import { userStore } from '../../store/user/user-store';
+import { Dispatcher } from '@ngrx/signals/events';
+import { userEvents } from '../../store/user/user-store-events';
 
 @Component({
   selector: 'app-register-stepper',
@@ -52,11 +51,9 @@ export class RegisterStepperComponent {
   ]);
 
   public selectedIndex = signal(0);
-
-  private readonly userService = inject(UserService);
-  private readonly companyService = inject(CompanyService);
   private readonly notificationsService = inject(NotificationsService);
-  private readonly router = inject(Router);
+  private readonly userStore = inject(userStore);
+  readonly #dispatcher = inject(Dispatcher);
 
   finishRegister(skipCompany: boolean) {
     this.checkFormValidity();
@@ -79,13 +76,7 @@ export class RegisterStepperComponent {
       organizationName: registerFormValue!.organizationName,
     };
 
-    return this.userService
-      .register(register)
-      .pipe(
-        switchMap(() => (company ? this.companyService.create(company) : of(null))),
-        switchMap(() => this.companyService.getUserCompanies()),
-      )
-      .subscribe(() => this.router.navigate(['/']));
+    this.#dispatcher.dispatch(userEvents.register({ credentials: register, company: company }));
   }
 
   selectTab(i: number) {

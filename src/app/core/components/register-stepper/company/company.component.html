@@ -86,7 +86,7 @@
     </mat-card-content>
     <mat-card-actions class="card__actions flex-row space-between">
       <button matButton="outlined" (click)="submit(true)">Skip for now</button>
-      <button matButton="filled" type="submit" [disabled]="form.invalid" (click)="submit(false)">
+      <button matButton="filled" type="submit" [disabled]="form.invalid || userStore.isLoading()"  (click)="submit(false)">
         Finish Sign Up
       </button>
     </mat-card-actions>
