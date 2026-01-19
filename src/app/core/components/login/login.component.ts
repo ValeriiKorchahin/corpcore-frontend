@@ -14,9 +14,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ILogin } from '../../models/ILogin.interface';
 import { RouterLink } from '@angular/router';
-import { userStore } from '../../store/user/user-store';
-import { Dispatcher } from '@ngrx/signals/events';
-import { userEvents } from '../../store/user/user-store-events';
+import { Store } from '@ngrx/store';
+import { userActions } from '../../store/user/user-actions';
+import { selectLoading } from '../../store/user/user-selectors';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ import { userEvents } from '../../store/user/user-store-events';
     MatCardTitle,
     MatError,
     RouterLink,
+    AsyncPipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -48,8 +50,9 @@ export class LoginComponent implements OnInit {
     password: FormControl<string | null>;
   }>;
   public isPasswordVisible = false;
-  public userStore = inject(userStore);
-  readonly #dispatcher = inject(Dispatcher);
+
+  readonly store = inject(Store);
+  public isLoading$ = this.store.select(selectLoading);
 
   ngOnInit() {
     this.createFormGroup();
@@ -57,7 +60,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     const credentials = this.form.value as ILogin;
-    this.#dispatcher.dispatch(userEvents.login(credentials));
+    this.store.dispatch(userActions.login(credentials));
   }
 
   private createFormGroup() {

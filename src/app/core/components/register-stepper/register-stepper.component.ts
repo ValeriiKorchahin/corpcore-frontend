@@ -13,7 +13,8 @@ import { NgClass } from '@angular/common';
 import { IRegister } from '../../models/ILogin.interface';
 import { NotificationsService } from '../../services/notifications.service';
 import { Dispatcher } from '@ngrx/signals/events';
-import { userEvents } from '../../store/user/user-store-events';
+import { Store } from '@ngrx/store';
+import { userActions } from '../../store/user/user-actions';
 
 @Component({
   selector: 'app-register-stepper',
@@ -51,7 +52,7 @@ export class RegisterStepperComponent {
 
   public selectedIndex = signal(0);
   private readonly notificationsService = inject(NotificationsService);
-  readonly #dispatcher = inject(Dispatcher);
+  private readonly store = inject(Store);
 
   finishRegister(skipCompany: boolean) {
     this.checkFormValidity();
@@ -74,7 +75,7 @@ export class RegisterStepperComponent {
       organizationName: registerFormValue!.organizationName,
     };
 
-    this.#dispatcher.dispatch(userEvents.register({ credentials: register, company: company }));
+    this.store.dispatch(userActions.register(register));
   }
 
   selectTab(i: number) {

@@ -12,8 +12,12 @@ import { UserService } from './core/services/user.service';
 import { firstValueFrom } from 'rxjs';
 import { jwtExpirationInterceptor } from './core/interceptors/jwt-expiration-interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { userCompaniesStore } from './core/store/user-companies/user-companies-store';
 import { provideStore } from '@ngrx/store';
+import { userReducer } from './core/store/user/user-reducer';
+import { provideEffects } from '@ngrx/effects';
+import { UserEffects } from './core/store/user/user-effects';
+import { UserCompaniesEffects } from './core/store/user-companies/user-companies-effects';
+import { userCompaniesReducer } from './core/store/user-companies/user-companies-reducer';
 
 export async function authInitializer() {
   const userService = inject(UserService);
@@ -29,13 +33,19 @@ export async function authInitializer() {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    userCompaniesStore,
     provideZonelessChangeDetection(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtInterceptor, jwtExpirationInterceptor])),
     provideAppInitializer(authInitializer),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideStore()
+    provideStore({
+      user: userReducer,
+      userCompanies: userCompaniesReducer
+    }),
+    provideEffects([
+      UserEffects,
+      UserCompaniesEffects
+    ])
 ],
 };

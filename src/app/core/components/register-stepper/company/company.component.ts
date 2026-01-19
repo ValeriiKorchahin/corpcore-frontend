@@ -13,7 +13,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PhoneInput } from '../../../utils/controls/phone-input/phone-input';
 import { COUNTRIES } from '../../../utils/const/countries';
 import { MatSelect, MatOption } from '@angular/material/select';
-import { userStore } from '../../../store/user/user-store';
 
 export type CompanyFormType = FormGroup<{
   name: FormControl<string>;
@@ -53,7 +52,6 @@ export class CompanyComponent implements OnInit {
   public finishSignUp = output<boolean>();
   public form!: CompanyFormType;
   readonly countries = signal(COUNTRIES);
-  public readonly userStore = inject(userStore);
 
   ngOnInit(): void {
     this.createFormGroup();
