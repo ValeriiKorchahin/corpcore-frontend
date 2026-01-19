@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { jwtExpirationInterceptor } from './core/interceptors/jwt-expiration-interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { userCompaniesStore } from './core/store/user-companies/user-companies-store';
+import { provideStore } from '@ngrx/store';
 
 export async function authInitializer() {
   const userService = inject(UserService);
@@ -34,6 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtInterceptor, jwtExpirationInterceptor])),
     provideAppInitializer(authInitializer),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideStore()
 ],
 };
